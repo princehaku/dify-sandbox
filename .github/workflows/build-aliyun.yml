@@ -49,6 +49,10 @@ jobs:
             type=sha,enable=true,priority=100,prefix=,suffix=,format=long
             type=raw,value=${{ github.ref_name }},enable=${{ startsWith(github.ref, 'refs/tags/') }}
 
+      - name: Run Build Docker Image
+        run : |
+          docker login -u ${{ secrets.ALIYUN_REGISTRY_USER }} -p ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}  ${{ secrets.ALIYUN_REGISTRY }}
+
       - name: Build Aliyun Docker Images
         run:
           for tag in $(echo "${{ steps.meta.outputs.tags }}" | tr ',' '\n');
