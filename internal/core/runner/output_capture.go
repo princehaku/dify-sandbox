@@ -143,7 +143,7 @@ func (s *OutputCaptureRunner) CaptureOutput(cmd *exec.Cmd) error {
 		} else if status.ExitCode() != 0 {
 			exit_string := status.String()
 			if strings.Contains(exit_string, "bad system call") {
-				s.WriteError([]byte("error: operation not permitted\n"))
+				s.WriteError([]byte(fmt.Sprintf("error: %v operation not permitted\n", exit_string)))
 			} else {
 				s.WriteError([]byte(fmt.Sprintf("error: %v\n", exit_string)))
 			}
